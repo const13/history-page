@@ -1,0 +1,1 @@
+export { HistoricalPage } from './HistoricalPage';
