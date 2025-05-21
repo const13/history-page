@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Years, YearsWrapper } from './style';
 import { colorsUsage } from '../../theme';
@@ -11,8 +11,35 @@ interface Props {
 export const YearsCounter = ({ minValue, maxValue }: Props) => {
   return (
     <YearsWrapper>
-        <Years  $id={'minYear'} $value={minValue} $color={colorsUsage.minYear} />
-        <Years  $id={'maxYear'} $value={maxValue} $color={colorsUsage.maxYear} />
+      <Years $color={colorsUsage.minYear}><Counter toNumber={minValue} /></Years>
+      <Years $color={colorsUsage.maxYear}><Counter toNumber={maxValue} /></Years>
     </YearsWrapper>
   );
+}
+
+const duration = 1000;
+
+interface CounterProps {
+  toNumber: number
+}
+
+const Counter = ({ toNumber }: CounterProps) => {
+  const [count, setCount] = useState(toNumber);
+
+  useEffect(() => {
+    const diff = Math.abs(toNumber - count);
+    let interval = Math.min(150, duration / diff);
+
+    const intervalId = setInterval(() => {
+      if (toNumber > count) {
+        setCount(prevCount => prevCount + 1);
+      } else if (toNumber < count) {
+        setCount(prevCount => prevCount - 1);
+      }
+    }, interval);
+    if (count === toNumber) clearInterval(intervalId);
+    return () => clearInterval(intervalId);
+  }, [toNumber, count]);
+
+  return (<>{count}</>);
 }

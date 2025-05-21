@@ -8,7 +8,6 @@ export const DateEventTypeObj = {
 } as const;
 
 export type DateEventType = keyof typeof DateEventTypeObj;
-//const DateEventTypeValues = Object.values(DateEventTypeObj);
 
 export type DateEvent = {
   id: number;

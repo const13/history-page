@@ -23,10 +23,11 @@ export const Gallery = memo(({ data }: Props) => {
       { opacity: 1, duration: 1 },
     )
   }, [data]);
+
   return (
-    <SwiperWrapper ref={sRef}>
+    <SwiperWrapper>
       <SwiperButton className={'prev-button'} />
-      <StyledSwiper
+      <StyledSwiper ref={sRef}
         slidesPerView={'auto'}
         grabCursor={true}
         spaceBetween={'5%'}

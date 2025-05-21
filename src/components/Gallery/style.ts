@@ -2,7 +2,6 @@ import { Swiper } from 'swiper/react';
 import styled from "styled-components";
 import { colorsUsage } from "../../theme/palette";
 import ArrowIcon from '../../assets/arrow-r.svg';
-// import ContractSvg from 'ada-ui/assets/svg/u_file-copy-alt.svg?react';
 
 export const HistoricalPageWrapper = styled.div`
   position: relative;
