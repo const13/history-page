@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import { SwiperSlide } from 'swiper/react';
 import { Navigation, Mousewheel, Keyboard } from 'swiper/modules';
 import gsap from 'gsap';
@@ -10,12 +10,14 @@ import {
   SwiperButton,
   SwiperWrapper,
 } from './style';
+import Swiper from 'swiper';
 
 interface Props {
   data: DateEvent[];
 }
 
 export const Gallery = memo(({ data }: Props) => {
+  const [swiper, setSwiper] = useState<Swiper>();
   const sRef = useRef(null);
   useEffect(() => {
     gsap.fromTo(sRef.current,
@@ -23,6 +25,10 @@ export const Gallery = memo(({ data }: Props) => {
       { opacity: 1, duration: 1 },
     )
   }, [data]);
+
+  useEffect(() => {
+    swiper?.slideTo(0, 500);
+  }, [data, swiper]);
 
   return (
     <SwiperWrapper>
@@ -38,6 +44,7 @@ export const Gallery = memo(({ data }: Props) => {
         }}
         keyboard={true}
         modules={[Navigation, Mousewheel, Keyboard]}
+        onSwiper={(swiper: Swiper) => setSwiper(swiper)}
       >
         {data.map(({ id, date, text }) =>
           <SwiperSlide key={id}>

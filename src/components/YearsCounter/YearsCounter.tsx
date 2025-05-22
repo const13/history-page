@@ -17,7 +17,7 @@ export const YearsCounter = ({ minValue, maxValue }: Props) => {
   );
 }
 
-const duration = 1000;
+const duration = 300;
 
 interface CounterProps {
   toNumber: number

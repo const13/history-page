@@ -7,7 +7,7 @@ export type GlobalContextType = {
 };
 
 export const defaultCtx: GlobalContextType = {
-  activeFilter: 'wars',
+  activeFilter: 'cinema',
   setActiveFilter: () => { }
 };
 

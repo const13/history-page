@@ -25,17 +25,6 @@ export const HLine = styled.div`
   border-bottom: 1px solid ${colorsUsage.border10};
 `;
 
-export const Circle = styled.div`
-  position: absolute;
-  left: 50%;
-  top: 44%;
-  transform: translate(calc(-50%), -50%);
-  width: 50vh;
-  height: 50vh;
-  border-radius: 50%;
-  border: 1px solid ${colorsUsage.border20};
-  z-index: 1;
-`;
 
 export const Title = styled.h1`
   position: absolute;

@@ -8,12 +8,12 @@ import { Gallery } from '../Gallery';
 import { FilterBtn } from '../FilterBtn';
 
 import {
-  Circle,
   HistoricalPageWrapper,
   HLine,
   Title,
   VLine
 } from './style';
+import { FilterCircle } from '../FilterCircle';
 
 export const HistoricalPage = () => {
   const [activeFilter, setActiveFilter] = useState<DateEventType>(defaultCtx.activeFilter);
@@ -33,7 +33,7 @@ export const HistoricalPage = () => {
         <VLine />
         <HLine />
         <Title>Исторические даты</Title>
-        <Circle />
+        <FilterCircle filters={DateEventTypeObj} />
         <YearsCounter minValue={minYear} maxValue={maxYear} />
         <Gallery data={filteredData} />
         <FilterBtn filters={DateEventTypeObj} />

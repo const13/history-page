@@ -7,6 +7,7 @@ export const colorsPalette = {
   blue4: 'rgba(56, 119, 238, .1)',
   blue5: 'rgba(93, 95, 239, 1)',
   blue6: 'rgba(66, 86, 122, 0.5)',
+  blue7: 'rgba(48, 62, 88, 0.5)',
   pink1: 'rgba(239, 93, 168, .9)',
   white: 'rgba(255, 255, 255, 1)',
   gradientBlue: 'rgba(56, 119, 238, 1)',
@@ -25,4 +26,5 @@ export const colorsUsage = {
   buttonBg: colorsPalette.white,
   buttonShadow: colorsPalette.blue4,
   buttonBorder: colorsPalette.blue6,
+  circleBorder: colorsPalette.blue7,
 }
