@@ -3,7 +3,7 @@ import { DateEventType, DateEventTypeObj } from '../../types';
 
 import { Circle, Point, PointWrapper, IndexText, FilterName } from './style';
 import { useGlobalContext } from '../../context';
-import { useViewportWidth } from '../../hooks';
+import { useViewport } from '../../hooks';
 
 type PointData = {
   index: number,
@@ -25,7 +25,7 @@ export const FilterCircle = ({ filters }: Props) => {
   const filtersLength = filtersArr.length;
   const { activeFilter, setActiveFilter } = useGlobalContext();
   const indexActiveFilter = filtersArr.indexOf(activeFilter);
-  const [width, height] = useViewportWidth();
+  const [width, height] = useViewport();
   const diameter = Math.min(width, height) / 2;
   const radius = diameter / 2;
   const [rotAngle, setRotAngle] = useState(360 / filtersLength * (indexActiveFilter + 1));

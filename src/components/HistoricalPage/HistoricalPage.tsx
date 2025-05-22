@@ -3,21 +3,22 @@ import React, { useState } from 'react';
 import { eventsData } from '../../mocks/data';
 import { defaultCtx, GlobalContext } from '../../context';
 import { DateEventType, DateEventTypeObj } from '../../types';
+import { useIsMobile } from '../../hooks/useMediaQuery';
+
 import { YearsCounter } from '../YearsCounter/YearsCounter';
 import { Gallery } from '../Gallery';
 import { FilterBtn } from '../FilterBtn';
-
+import { FilterCircle } from '../FilterCircle';
 import {
   HistoricalPageWrapper,
   HLine,
   Title,
   VLine
 } from './style';
-import { FilterCircle } from '../FilterCircle';
 
 export const HistoricalPage = () => {
   const [activeFilter, setActiveFilter] = useState<DateEventType>(defaultCtx.activeFilter);
-
+  const isMobile = useIsMobile();
   const filteredData = eventsData
     .filter(item => item.type === activeFilter)
     .sort((a, b) => a.date - b.date);
@@ -30,10 +31,10 @@ export const HistoricalPage = () => {
   return (
     <GlobalContext.Provider value={{ activeFilter, setActiveFilter }}>
       <HistoricalPageWrapper>
-        <VLine />
+        {!isMobile && <VLine />}
         <HLine />
         <Title>Исторические даты</Title>
-        <FilterCircle filters={DateEventTypeObj} />
+        {!isMobile && <FilterCircle filters={DateEventTypeObj} />}
         <YearsCounter minValue={minYear} maxValue={maxYear} />
         <Gallery data={filteredData} />
         <FilterBtn filters={DateEventTypeObj} />

@@ -1,17 +1,25 @@
 import styled from "styled-components";
-import { colorsUsage } from "../../theme/palette";
+import { colorsUsage, mediaQueries } from "../../theme";
 import ArrowIcon from '../../assets/arrow-r2.svg';
 
 export const Wrapper = styled.div`
   position: absolute;
-  top: 65vh;
+  bottom: 26vh;
   width: 120px;
   height: 80px;
-  margin-left: 80px;
+  margin-left: min(80px, 5vw);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   user-select: none;
+  z-index: 1;
+
+  ${mediaQueries.isMobile} {
+    width: 58px;
+    height: 50px;
+    margin-left: max(20px, 5vw);
+    bottom: max(15px, 5vw);
+  }
 `;
 
 export const Counter = styled.span`
@@ -34,13 +42,17 @@ export const Btn = styled.button`
   height: 50px;
   border: 1px solid ${colorsUsage.buttonBorder};
   border-radius: 50%;
-  color: red;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   background-color: transparent;
   transition: background-color 0.5s;
+
+  ${mediaQueries.isMobile} {
+    width: 25px;
+    height: 25px;
+  }
 
   &:hover {
     background-color: ${colorsUsage.buttonBg};
@@ -59,6 +71,13 @@ export const Prev = styled(Btn)`
   &::after {
      content: url(${ArrowIcon});
      transform: rotate(180deg);
+
+    ${mediaQueries.isMobile} {
+      position: relative;
+      top: 1px;
+      left: -1px;
+      transform: rotate(180deg) scale(0.5);
+    }
    }
 `;
 
@@ -67,5 +86,12 @@ export const Next = styled(Btn)`
 
   &::after {
      content: url(${ArrowIcon});
+
+     ${mediaQueries.isMobile} {
+      position: relative;
+      top: -1.5px;
+      left: -2px;
+      transform:  scale(0.5);
+    }
    }
 `;

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-import { Years, YearsWrapper } from './style';
 import { colorsUsage } from '../../theme';
+import { useIsMobile } from '../../hooks/useMediaQuery';
+
+import { Years, YearsWrapper } from './style';
 
 interface Props {
   minValue: number;
@@ -9,10 +11,15 @@ interface Props {
 }
 
 export const YearsCounter = ({ minValue, maxValue }: Props) => {
+  const isMobile = useIsMobile()
   return (
     <YearsWrapper>
-      <Years $color={colorsUsage.minYear}><Counter toNumber={minValue} /></Years>
-      <Years $color={colorsUsage.maxYear}><Counter toNumber={maxValue} /></Years>
+      <Years $color={isMobile ? colorsUsage.minYearSecondary : colorsUsage.minYear}>
+        <Counter toNumber={minValue} />
+      </Years>
+      <Years $color={colorsUsage.maxYear}>
+        <Counter toNumber={maxValue} />
+      </Years>
     </YearsWrapper>
   );
 }

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colorsUsage } from "../../theme/palette";
+import { colorsUsage } from "../../theme";
 
 export const Circle = styled.div<{ $angle: number }>`
   position: relative;

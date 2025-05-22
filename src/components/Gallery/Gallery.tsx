@@ -1,8 +1,13 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
-import { SwiperSlide } from 'swiper/react';
-import { Navigation, Mousewheel, Keyboard } from 'swiper/modules';
+import { Swiper as Swip, SwiperSlide } from 'swiper/react';
+import { Navigation, Mousewheel, Keyboard, Pagination } from 'swiper/modules';
 import gsap from 'gsap';
 import { DateEvent, } from '../../types';
+import Swiper from 'swiper';
+import { useIsMobile } from '../../hooks/useMediaQuery';
+
+import 'swiper/css';
+import 'swiper/css/pagination';
 import {
   SlideText,
   SlideTitle,
@@ -10,7 +15,6 @@ import {
   SwiperButton,
   SwiperWrapper,
 } from './style';
-import Swiper from 'swiper';
 
 interface Props {
   data: DateEvent[];
@@ -18,10 +22,11 @@ interface Props {
 
 export const Gallery = memo(({ data }: Props) => {
   const [swiper, setSwiper] = useState<Swiper>();
+  const isMobile = useIsMobile()
   const sRef = useRef(null);
   useEffect(() => {
     gsap.fromTo(sRef.current,
-      { opacity: 0, duration: 1 },
+      { opacity: 0 },
       { opacity: 1, duration: 1 },
     )
   }, [data]);
@@ -32,19 +37,23 @@ export const Gallery = memo(({ data }: Props) => {
 
   return (
     <SwiperWrapper>
-      <SwiperButton className={'prev-button'} />
+      {!isMobile && <SwiperButton className={'prev-button'} />}
       <StyledSwiper ref={sRef}
         slidesPerView={'auto'}
         grabCursor={true}
         spaceBetween={'5%'}
         mousewheel={true}
-        navigation={{
+        navigation={!isMobile && {
           nextEl: '.next-button',
           prevEl: '.prev-button',
         }}
         keyboard={true}
-        modules={[Navigation, Mousewheel, Keyboard]}
+        modules={[Navigation, Mousewheel, Keyboard, Pagination]}
+        pagination={isMobile && {
+          clickable: true,
+        }}
         onSwiper={(swiper: Swiper) => setSwiper(swiper)}
+        fadeEffect={{ crossFade: true }}
       >
         {data.map(({ id, date, text }) =>
           <SwiperSlide key={id}>
@@ -53,7 +62,7 @@ export const Gallery = memo(({ data }: Props) => {
           </SwiperSlide>
         )}
       </StyledSwiper>
-      <SwiperButton className={'next-button'} />
-    </SwiperWrapper>
+      {!isMobile && <SwiperButton className={'next-button'} />}
+    </SwiperWrapper >
   );
 })
