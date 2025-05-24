@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { DateEventType, DateEventTypeObj } from '../../types';
 
 import { Circle, Point, PointWrapper, IndexText, FilterName } from './style';
-import { useGlobalContext } from '../../context';
 import { useViewport } from '../../hooks';
+import { useGlobalContext } from '../../context';
 
 type PointData = {
   index: number,

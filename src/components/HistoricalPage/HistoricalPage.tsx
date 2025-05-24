@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useMemo } from 'react';
 
 import { eventsData } from '../../mocks/data';
-import { defaultCtx, GlobalContext } from '../../context';
-import { DateEventType, DateEventTypeObj } from '../../types';
+import { useGlobalContext } from '../../context';
+import { DateEventTypeObj } from '../../types';
 import { useIsMobile } from '../../hooks/useMediaQuery';
+import { animationDuration } from '../../theme';
 
 import { YearsCounter } from '../YearsCounter/YearsCounter';
 import { Gallery } from '../Gallery';
 import { FilterBtn } from '../FilterBtn';
 import { FilterCircle } from '../FilterCircle';
+import { FadeWrapper } from '../FadeWrapper';
 import {
   HistoricalPageWrapper,
   HLine,
@@ -17,28 +19,40 @@ import {
 } from './style';
 
 export const HistoricalPage = () => {
-  const [activeFilter, setActiveFilter] = useState<DateEventType>(defaultCtx.activeFilter);
+  const { activeFilter } = useGlobalContext();
   const isMobile = useIsMobile();
-  const filteredData = eventsData
-    .filter(item => item.type === activeFilter)
-    .sort((a, b) => a.date - b.date);
 
-  const [minYear, maxYear] = [
+  const filteredData = useMemo(() =>
+    eventsData
+      .filter(item => item.type === activeFilter)
+      .sort((a, b) => a.date - b.date),
+    [activeFilter]
+  );
+
+  const [minYear, maxYear] = useMemo(() => [
     Math.min(...filteredData.map(i => i.date)),
     Math.max(...filteredData.map(i => i.date))
-  ];
+  ], [filteredData]);
 
   return (
-    <GlobalContext.Provider value={{ activeFilter, setActiveFilter }}>
-      <HistoricalPageWrapper>
-        {!isMobile && <VLine />}
-        <HLine />
-        <Title>Исторические даты</Title>
-        {!isMobile && <FilterCircle filters={DateEventTypeObj} />}
-        <YearsCounter minValue={minYear} maxValue={maxYear} />
-        <Gallery data={filteredData} />
-        <FilterBtn filters={DateEventTypeObj} />
-      </HistoricalPageWrapper>
-    </GlobalContext.Provider>
+    <HistoricalPageWrapper>
+      {!isMobile && <VLine />}
+      <HLine />
+      <Title>Исторические даты</Title>
+
+      {!isMobile && <FilterCircle filters={DateEventTypeObj} />}
+
+      <YearsCounter minValue={minYear} maxValue={maxYear} />
+
+      <FadeWrapper
+        trigger={activeFilter}
+        duration={animationDuration}
+        data={filteredData}
+      >
+        {(data) => <Gallery data={data} />}
+      </FadeWrapper>
+
+      <FilterBtn filters={DateEventTypeObj} />
+    </HistoricalPageWrapper>
   );
 }

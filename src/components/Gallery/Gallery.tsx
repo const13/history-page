@@ -1,10 +1,10 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
-import { Swiper as Swip, SwiperSlide } from 'swiper/react';
+import React, { useEffect, useState } from 'react';
+import { SwiperSlide } from 'swiper/react';
 import { Navigation, Mousewheel, Keyboard, Pagination } from 'swiper/modules';
-import gsap from 'gsap';
 import { DateEvent, } from '../../types';
 import Swiper from 'swiper';
 import { useIsMobile } from '../../hooks/useMediaQuery';
+import { animationDuration } from '../../theme';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -20,25 +20,25 @@ interface Props {
   data: DateEvent[];
 }
 
-export const Gallery = memo(({ data }: Props) => {
+export const Gallery = ({ data }: Props) => {
+  
   const [swiper, setSwiper] = useState<Swiper>();
-  const isMobile = useIsMobile()
-  const sRef = useRef(null);
-  useEffect(() => {
-    gsap.fromTo(sRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: 1 },
-    )
-  }, [data]);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
-    swiper?.slideTo(0, 500);
-  }, [data, swiper]);
+    const interval = setTimeout(() => {
+      swiper?.slideTo(0);
+    }, animationDuration * 1000 / 2);
+
+    return () => {
+      clearInterval(interval)
+    };
+  });
 
   return (
     <SwiperWrapper>
       {!isMobile && <SwiperButton className={'prev-button'} />}
-      <StyledSwiper ref={sRef}
+      <StyledSwiper
         slidesPerView={'auto'}
         grabCursor={true}
         spaceBetween={'5%'}
@@ -65,4 +65,4 @@ export const Gallery = memo(({ data }: Props) => {
       {!isMobile && <SwiperButton className={'next-button'} />}
     </SwiperWrapper >
   );
-})
+}

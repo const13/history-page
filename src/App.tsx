@@ -1,12 +1,15 @@
 import React from 'react';
-import { App as AppWrapper } from './style';
+import { GlobalProvider } from './context';
 import { HistoricalPage } from './components/HistoricalPage';
+import { App as AppWrapper } from './style';
 
 function App() {
   return (
-    <AppWrapper>
-      <HistoricalPage />
-    </AppWrapper>
+    <GlobalProvider>
+      <AppWrapper>
+        <HistoricalPage />
+      </AppWrapper>
+    </GlobalProvider>
   );
 }
 
