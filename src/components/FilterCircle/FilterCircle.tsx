@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { DateEventType, DateEventTypeObj } from '../../types';
 
 import { Circle, Point, PointWrapper, IndexText, FilterName } from './style';
@@ -28,14 +28,17 @@ export const FilterCircle = ({ filters }: Props) => {
   const [width, height] = useViewport();
   const diameter = Math.min(width, height) / 2;
   const radius = diameter / 2;
-  const [rotAngle, setRotAngle] = useState(360 / filtersLength * (indexActiveFilter + 1));
+  const calcAngle = useCallback(() =>
+    210 + 360 / filtersLength * (indexActiveFilter),
+    [filtersLength, indexActiveFilter]);
+  const [rotAngle, setRotAngle] = useState(calcAngle());
 
   useEffect(() => {
-    setRotAngle(360 / filtersLength * (indexActiveFilter));
-  }, [indexActiveFilter, filtersLength]);
+    setRotAngle(calcAngle());
+  }, [calcAngle]);
 
   const points: PointType[] = filtersArr.map((filterName, index) => {
-    const angle = Math.PI * 2 * index / filtersLength + 210 * (Math.PI / 180);
+    const angle = Math.PI * 2 * index / filtersLength + 60 * (Math.PI / 180);
     return {
       x: radius + radius * Math.sin(angle),
       y: radius + radius * Math.cos(angle),

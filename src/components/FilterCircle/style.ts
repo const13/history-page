@@ -24,20 +24,20 @@ export const Point = styled.div<{ $angle: number }>`
   background-color: ${colorsUsage.fontPrimary};
   cursor: pointer;
   transform: rotate(${props => props.$angle}deg);
-  transition: height 0.3s ease-out, width 0.3s ease-out, background-color 0.3s ease-in;
+  transition: height 0.2s ease-out, width 0.2s ease-out, background-color 0.2s ease-in, transform 0.3s linear;
 `;
 
 export const IndexText = styled.span`
   font-size: 0px;
   color: ${colorsUsage.fontPrimary};
   opacity: 0;
-  transition: opacity 0.3s ease-in font-size 0.3s ease-in;
+  transition: opacity 0.2s ease-in, font-size 0.2s ease-in;
 `;
 
 export const FilterName = styled.span`
   position: absolute;
   left: calc(100% + 15px); 
-  font-size: 0;
+  font-size: 20px;
   font-weight: 700;
   color: ${colorsUsage.fontPrimary};
   opacity: 0;
@@ -54,9 +54,9 @@ export const PointWrapper = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  transform: translate(51%, -51%);
+  transform: translate(52%, -52%);
   cursor: pointer;
-
+  
   &:hover, &.active {
     ${Point} {
       width: 56px;
@@ -72,7 +72,12 @@ export const PointWrapper = styled.div`
   &.active {
     ${FilterName} {
       opacity: 1;
-      font-size: 20px;
+    }
+  }
+  &:not(.active) {
+    ${FilterName} {
+      transform: none;
+      transition: opacity 0.3s ease-in;
     }
   }
 `;
